@@ -21,6 +21,9 @@ app.use('/api/v1', userRoute)
 app.get('/', (req, res) => {
     return res.status(200).json({message: 'Success test'})
 })
+app.get('/test', (req, res) => {
+    return res.status(200).json({message: 'Success test1'})
+})
 
 //* If there is an error on all routes then default all 
 app.all('*', (req, res) => {

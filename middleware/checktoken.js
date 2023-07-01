@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const { messaging } = require('./messaging.utils')
-const { messages, statuscode } = require('./messages.utils')
+const { messaging } = require('../utils/messaging.utils')
+const { messages, statuscode } = require('../utils/messages.utils')
 const config = require('../config/config')
 
 const authToken = (req, res, next) => {
