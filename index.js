@@ -19,7 +19,7 @@ dbConnect()
 app.use('/api/v1', userRoute)
 
 app.get('/', (req, res) => {
-    return res.status(200).json({message: 'Success!'})
+    return res.status(200).json({message: 'Success test'})
 })
 
 //* If there is an error on all routes then default all 
