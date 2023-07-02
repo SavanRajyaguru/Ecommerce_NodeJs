@@ -21,8 +21,8 @@ const signUpUser = async (req, res) => {
         return messaging(res, statuscode.statusSuccess, 'Account created successfully')
 
     } catch (error) {
-        console.log(error)
-        return messaging(res, statuscode.statusNotFound, error.errors.nMobile.message)
+        console.log('>>>>>>>',error)
+        return messaging(res, statuscode.statusNotFound, error._message)
     }
 }
 
@@ -36,11 +36,16 @@ const loginUser = async (req, res) => {
 
         const token = createJwt({ id: isUser._id, eRole: isUser.eRole })
 
-        return messaging(res, statuscode.statusSuccess, token)
+        return res.status(200).json({ 
+            message: 'Login successful',
+            token: token,
+            data: isUser
+        })
+        // return messaging(res, statuscode.statusSuccess, token)
 
     } catch (error) {
         console.log(error)
-        return messaging(res, statuscode.statusNotFound, error)
+        return messaging(res, statuscode.statusNotFound, error._message)
     }
 }
 
