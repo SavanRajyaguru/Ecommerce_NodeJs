@@ -27,6 +27,10 @@ const userSchema = new Schema({
         },
         require: [true, 'Role is require']
     },
+    sToken: {
+        type: String,
+        default: ''
+    }
 })
 
 const User = mongoose.model('users', userSchema)

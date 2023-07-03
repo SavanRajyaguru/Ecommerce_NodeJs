@@ -1,5 +1,6 @@
 const messages = {
     catch: 'Something went wrong',
+    tokenError: 'Token not created',
     statusSuccess: 'Success',
     registeredSuccess: 'You are registered successfully',
     alreadyRegisteredUser: 'Already registered',
