@@ -32,7 +32,7 @@ class UserController{
             const { sEmail, sPassword } = req.body
             const isUser = await User.findOne({ sEmail: sEmail, sPassword: createHash(sPassword) })
             if(!isUser){
-                return messaging(res, statuscode.statusNotFound, messages.loginSuccess)
+                return messaging(res, statuscode.statusNotFound, 'Email or password wrong!')
             }
     
             const token = createJwt({ id: isUser._id, eRole: isUser.eRole })
