@@ -15,45 +15,43 @@ const mobileSchema = new Schema({
     },
     sRamRom: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Ram and Rom is require']
     },
     sProcessor: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Processor is require']
     },
     sRearCamera: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Rear Camera is require']
     },
     sFrontCamera: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Front Camera is require']
     },
     sDisplay: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Display is require']
     },
     sBattery: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'Battery is require']
     },
     sNetworkType: {
         type: String,
-        require: [true, 'Password is require']
+        require: [true, 'NetworkType is require']
     },
     sSimType: {
         type: String,
         require: [true, 'Password is require']
     },
     eAudioJack: {
-        
+        type: String,
+        enum: ['Yes', 'No'],
+        require: [true, 'Audio Jack is require']
     }
 })
 
 const Mobile = mongoose.model('mobiles', mobileSchema)
 
 module.exports = Mobile
-// {
-//     '8GB': 25000,
-//     ''
-// }

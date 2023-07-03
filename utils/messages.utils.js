@@ -1,5 +1,5 @@
 const messages = {
-    catch: 'Error in catch',
+    catch: 'Something went wrong',
     statusSuccess: 'Success',
     registeredSuccess: 'You are registered successfully',
     alreadyRegisteredUser: 'Already registered',
@@ -42,7 +42,7 @@ const messages = {
 const statuscode = {
     statusSuccess: 200,
     statusNotFound: 403,
-    badrequest: 400,
+    badRequest: 400,
     unAuthorized: 403,
     pageNotFound: 404
 }

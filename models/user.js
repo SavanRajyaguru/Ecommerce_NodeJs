@@ -11,15 +11,8 @@ const userSchema = new Schema({
         require: [true, 'Email is required']
     },
     nMobile: {
-        type: Number,
-        min: [10, 'Must be at least 10 digit, got {VALUE}'],
+        type: String,
         unique: true,
-        validate: {
-            validator: function(v) {
-                return /^([0-9]{10}$)/.test(v)
-            },
-            message: '{VALUE} is not a valid 10 digit mobile number!'
-        },
         required: [true, 'Number is required']
     },
     sPassword: {
