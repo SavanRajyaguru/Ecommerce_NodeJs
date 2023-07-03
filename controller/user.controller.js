@@ -11,8 +11,9 @@ class UserController{
         try {
             const { sEmail, nMobile } = req.body
             const isUserExist = await User.findOne({ sEmail, nMobile })
+            console.log(isUserExist)
     
-            if(isUserExist){
+            if(isUserExist || isUserExist == null){
                 return messaging(res, statuscode.statusSuccess, false, messages.alreadyRegisteredUser)
             }
             //* start transaction
@@ -52,7 +53,7 @@ class UserController{
             const { sEmail, sPassword } = req.body
             const isUser = await User.findOne({ sEmail: sEmail, sPassword: createHash(sPassword) },{'__v': 0, sPassword: 0})
             if(!isUser){
-                return messaging(res, statuscode.statusNotFound, false, 'Email or password wrong!')
+                return messaging(res, statuscode.statusSuccess, false, 'Email or password wrong!')
             }
             
             return messaging(res, statuscode.statusSuccess, true, messages.loginSuccess, isUser)

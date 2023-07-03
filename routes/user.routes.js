@@ -1,13 +1,15 @@
 const userController = require('../controller/user.controller')
-const validator = require('../middleware/validate_user')
+const productController = require('../controller/product.controller')
+const { isAuthorizedSeller } = require('../middleware/checkauthorize')
+const { authToken } = require('../middleware/checktoken')
+const validator = require('../middleware/validation')
 
 const router = require('express').Router()
 
 router
     .post('/sign-up', validator.validateUserSignup, userController.signUpUser)
     .post('/login', userController.loginUser)
-    .get('/', (req, res) => {
-        return res.status(200).json({message: 'Success test2'})
-    })
+    //* check with params start with here
+    .post('/add-product?id', authToken, isAuthorizedSeller, validator.validateProduct, productController.addProduct), 
 
 module.exports = router
