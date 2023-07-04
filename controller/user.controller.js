@@ -37,7 +37,7 @@ class UserController{
 
             //* commit transaction
             await session.commitTransaction()
-            return messaging(res, statuscode.statusSuccess, true, messages.registeredSuccess)
+            return messaging(res, statuscode.statusSuccess, true, messages.registeredSuccess, {id: result._id})
     
         } catch (error) {
             console.log('>>>>>>>',error)

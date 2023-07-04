@@ -24,13 +24,13 @@ class ProductController{
         try {
             console.log(req.params)
 
-            // if()
+            
 
             const result = await Product.find({sCategory: req.params.category},{__v: 0})
             if(!result || result.length <= 0){
-                return messaging(res, statuscode.statusNotFound, false, 'Products does not exists', result)
+                return messaging(res, statuscode.statusSuccess, false, 'Products does not exists', result)
             }
-            return messaging(res, statuscode.statusNotFound, true, 'Products List', result)
+            return messaging(res, statuscode.statusSuccess, true, 'Products List', result)
         } catch (error) {
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
