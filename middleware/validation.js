@@ -11,16 +11,16 @@ class ValidateDetails{
             const emailRegex = new RegExp('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$')
 
             if(!emailRegex.test(sEmail)){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter valid email')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter valid email')
             }
             
             const listEnum = ['USER', 'SELLER']
             if(listEnum.indexOf(eRole) == -1){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter valid Role')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter valid Role')
             }
 
             if(nMobile.length != 10){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter valid mobile number')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter valid mobile number')
             }
             next()
         } catch (error) {
@@ -32,19 +32,19 @@ class ValidateDetails{
         try {
             const {sName, sBrandName, dPrice, sDescription, sCategory} = req.body
             if(!sName){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter name')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter name')
             }
             if(!sBrandName){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter brand name')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter brand name')
             }
             if(!dPrice || dPrice <= 0){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter valid price')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter valid price')
             }
             if(!sDescription){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter description')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter description')
             }
             if(!sCategory){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter category')
+                return messaging(res, statuscode.statusSuccess, false, 'Please enter category')
             }
             next()
         } catch (error) {
