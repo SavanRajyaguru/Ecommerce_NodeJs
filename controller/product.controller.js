@@ -24,7 +24,7 @@ class ProductController{
         try {
             console.log(req.params)
 
-            if()
+            // if()
 
             const result = await Product.find({sCategory: req.params.category},{__v: 0})
             if(!result || result.length <= 0){

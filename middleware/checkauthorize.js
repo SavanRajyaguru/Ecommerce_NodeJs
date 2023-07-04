@@ -11,7 +11,6 @@ const isAuthorizedSeller = async (req, res, next) => {
     if (!result) {
         return messaging(res, statuscode.unAuthorized, false, messages.unAuthorized)
     }
-    console.log(result)
     return req.decoded.eRole === 'SELLER'
         ? next()
         : messaging(res, statuscode.unAuthorized, false, messages.unAuthorized)

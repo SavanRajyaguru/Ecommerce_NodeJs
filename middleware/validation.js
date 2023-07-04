@@ -30,20 +30,22 @@ class ValidateDetails{
 
     validateProduct(req, res, next){
         try {
-            const {sName, sBrandName, nPrice, sDescription} = req.body
+            const {sName, sBrandName, dPrice, sDescription, sCategory} = req.body
             if(!sName){
                 return messaging(res, statuscode.statusNotFound, false, 'Please enter name')
             }
             if(!sBrandName){
                 return messaging(res, statuscode.statusNotFound, false, 'Please enter brand name')
             }
-            if(!nPrice){
-                return messaging(res, statuscode.statusNotFound, false, 'Please enter price')
+            if(!dPrice || dPrice <= 0){
+                return messaging(res, statuscode.statusNotFound, false, 'Please enter valid price')
             }
             if(!sDescription){
                 return messaging(res, statuscode.statusNotFound, false, 'Please enter description')
             }
-            console.log('TRUE>>>>')
+            if(!sCategory){
+                return messaging(res, statuscode.statusNotFound, false, 'Please enter category')
+            }
             next()
         } catch (error) {
             return messaging(res, statuscode.statusNotFound, false, 'Validation on product fail!')

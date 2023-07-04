@@ -5,11 +5,20 @@ const productSchema = new Schema({
         type: String,
         require: [true, 'Name name is required']
     },
+    iSellerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        require: [true, 'Seller Id is required']
+    },
+    sCategory: {
+        type: String,
+        require: [true, 'Category is required']
+    },
     sBrandName: {
         type: String,
         require: [true, 'Brand name is required']
     },
-    nPrice: {
+    dPrice: {
         type: Number,
         required: [true, 'Price is required']
     },

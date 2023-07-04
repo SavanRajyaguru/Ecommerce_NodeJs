@@ -17,7 +17,6 @@ const authToken = (req, res, next) => {
             }
 
             req.decoded = decoded
-            console.log(req.decoded)
 
             next()
         })

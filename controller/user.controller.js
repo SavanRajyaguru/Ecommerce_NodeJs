@@ -10,10 +10,10 @@ class UserController{
         const session = await mongoose.startSession()
         try {
             const { sEmail, nMobile } = req.body
-            const isUserExist = await User.findOne({ sEmail, nMobile })
+            const isUserExist = await User.findOne({ sEmail: sEmail, nMobile: nMobile })
             console.log(isUserExist)
     
-            if(isUserExist || isUserExist == null){
+            if(isUserExist){
                 return messaging(res, statuscode.statusSuccess, false, messages.alreadyRegisteredUser)
             }
             //* start transaction
@@ -42,7 +42,7 @@ class UserController{
         } catch (error) {
             console.log('>>>>>>>',error)
             await session.abortTransaction()
-            return messaging(res, statuscode.statusNotFound, messages.catch)
+            return messaging(res, statuscode.statusNotFound, false, messages.catch)
         } finally {
             await session.endSession()
         }

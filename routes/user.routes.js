@@ -9,7 +9,7 @@ const router = require('express').Router()
 router
     .post('/sign-up', validator.validateUserSignup, userController.signUpUser)
     .post('/login', userController.loginUser)
-    //* check with params start with here
-    .post('/add-product?id', authToken, isAuthorizedSeller, validator.validateProduct, productController.addProduct), 
+    .get('/get-product/:category?', productController.listProduct)
+    .post('/add-product', authToken, isAuthorizedSeller, validator.validateProduct, productController.addProduct), 
 
 module.exports = router
