@@ -10,7 +10,12 @@ class UserController{
         const session = await mongoose.startSession()
         try {
             const { sEmail, nMobile } = req.body
-            const isUserExist = await User.findOne({ sEmail: sEmail, nMobile: nMobile })
+            const isUserExist = await User.findOne({ 
+                $or: [
+                    {sEmail: sEmail},
+                    {nMobile: nMobile}
+                ]
+            })
             console.log(isUserExist)
     
             if(isUserExist){
