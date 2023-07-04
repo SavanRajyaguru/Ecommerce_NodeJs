@@ -22,11 +22,13 @@ class ProductController{
 
     async listProduct(req, res){
         try {
-            console.log(req.params)
+            const { category, limit } = req.params
+            if(!category){
+                const allList = await Product.find({},{__v: 0})
+                return messaging(res, statuscode.statusSuccess, true, 'All Product', allList)
+            }
+            const result = await Product.find({sCategory: category},{__v: 0}).limit(limit)
 
-            
-
-            const result = await Product.find({sCategory: req.params.category},{__v: 0})
             if(!result || result.length <= 0){
                 return messaging(res, statuscode.statusSuccess, false, 'Products does not exists', result)
             }
