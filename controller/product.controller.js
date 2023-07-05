@@ -24,7 +24,35 @@ class ProductController{
         try {
             const { category, limit } = req.params
             if(!category){
-                const allList = await Product.find({},{__v: 0})
+                const allList = await Product.aggregate([
+                    {
+                        $group: {
+                            _id: '$sCategory',
+                            data: {
+                                $push: '$$ROOT'
+                            }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            data: {
+                                $push: {
+                                    k: '$_id',
+                                    v: '$data'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $replaceRoot: {
+                            newRoot: {
+                                $arrayToObject: '$data'
+                            }
+                        }
+                    }
+                ])
+                console.log(allList)
                 return messaging(res, statuscode.statusSuccess, true, 'All Product', allList)
             }
             const result = await Product.find({sCategory: category},{__v: 0}).limit(limit)
