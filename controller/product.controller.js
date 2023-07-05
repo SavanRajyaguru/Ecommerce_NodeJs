@@ -22,15 +22,19 @@ class ProductController{
 
     async listProduct(req, res){
         try {
-            const { category, limit } = req.params
+            const { category, limit } = req.query
             if(!category){
                 const allList = await Product.aggregate([
                     {
                         $group: {
                             _id: '$sCategory',
                             data: {
-                                $push: '$$ROOT'
-                            }
+                                $topN: {
+                                    output: '$$ROOT',
+                                    sortBy: { dPrice: -1 },
+                                    n: 4,
+                                },
+                            },
                         }
                     },
                     {
@@ -56,7 +60,7 @@ class ProductController{
                 return messaging(res, statuscode.statusSuccess, true, 'All Product', allList)
             }
             const result = await Product.find({sCategory: category},{__v: 0}).limit(limit)
-
+            console.log(result.length)
             if(!result || result.length <= 0){
                 return messaging(res, statuscode.statusSuccess, false, 'Products does not exists', result)
             }
