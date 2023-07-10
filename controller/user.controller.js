@@ -68,6 +68,57 @@ class UserController{
             return messaging(res, statuscode.statusNotFound, messages.catch)
         }
     }
+
+    async updateUser(req, res){
+        try {
+            const { id } = req.decoded
+            console.log(req.decoded)
+            const { sUsername, sPassword, sEmail, nMobile } = req.body
+            
+            //* check if the use email and mobile exist or not
+            const isUserExist = await User.findOne({ 
+                _id: { $nin: id }, //! most imp condition when update user data
+                $or: [
+                    {sEmail: req.body.sEmail},
+                    {nMobile: req.body.nMobile}
+                ]
+            })
+            // TODO: work on the error
+            // const data = await User.findOneAndUpdate({ 
+            //     _id: { $nin: '64a2fb192e8bea5752b06c22' }, //! most imp condition when update user data
+            //     $or: [
+            //         {sEmail: req.body.sEmail},
+            //         {nMobile: req.body.nMobile}
+            //     ]
+            // }, { sUsername: 'XYZ' }, {new: true})
+            // console.log('UPDATE',data)
+            // if(!data) console.log('null')
+            console.log(isUserExist)
+    
+            if(isUserExist){
+                if(isUserExist.sEmail === req.body.sEmail){
+                    return messaging(res, statuscode.statusSuccess, false, 'Email all ready exist')
+                } 
+                if(isUserExist.nMobile === req.body.nMobile){
+                    return messaging(res, statuscode.statusSuccess, false, 'Mobile number all ready exist')
+                }
+                // return messaging(res, statuscode.statusSuccess, false, 'Email or Mobile number number all ready exist')
+            }
+            // TODO: working progress
+            const isUpdate = await User.updateOne(
+                {_id: id}, 
+                { sUsername, sPassword, sEmail, nMobile }
+            )
+            if(!isUpdate){
+                return messaging(res, statuscode.statusSuccess, false, 'Profile not updated', {})
+            }
+            // const result = await User.updateOne({iUserId: id}, { })
+            return messaging(res, statuscode.statusSuccess, true, 'Profile updated successfully', isUpdate)
+        } catch (error) {
+            console.log(error)
+            return messaging(res, statuscode.statusNotFound, false, messages.catch)
+        }
+    }
 }
 
 module.exports = new UserController()
