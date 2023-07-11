@@ -6,5 +6,6 @@ const dbConnect = async () => {
     .then((result) => console.log('DB connect at', result.connection.name))
     .catch((err) => console.log('DB connect error', err))
 }
+mongoose.set('debug', true)
 
 module.exports = dbConnect

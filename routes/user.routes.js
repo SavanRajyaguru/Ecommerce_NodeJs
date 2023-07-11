@@ -12,7 +12,7 @@ router
     .post('/login', userController.loginUser)
     .get('/get-product', authToken, isAuthorizedUser, productController.listProduct)
     .post('/add-product', authToken, isAuthorizedSeller, validator.validateProduct, productController.addProduct) 
-    .put('/update-user', authToken, isAuthorizedUser, userController.updateUser)
+    .put('/update-user', authToken, validator.validateUpdate, userController.updateUser)
     .get('/seller-product', authToken, isAuthorizedSeller, sellerController.getSellerProduct)
 
 module.exports = router

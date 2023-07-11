@@ -77,22 +77,12 @@ class UserController{
             
             //* check if the use email and mobile exist or not
             const isUserExist = await User.findOne({ 
-                _id: { $nin: id }, //! most imp condition when update user data
+                _id: { $nin: [id] }, //! most imp condition when update user data
                 $or: [
                     {sEmail: req.body.sEmail},
                     {nMobile: req.body.nMobile}
                 ]
             })
-            // TODO: work on the error
-            // const data = await User.findOneAndUpdate({ 
-            //     _id: { $nin: '64a2fb192e8bea5752b06c22' }, //! most imp condition when update user data
-            //     $or: [
-            //         {sEmail: req.body.sEmail},
-            //         {nMobile: req.body.nMobile}
-            //     ]
-            // }, { sUsername: 'XYZ' }, {new: true})
-            // console.log('UPDATE',data)
-            // if(!data) console.log('null')
             console.log(isUserExist)
     
             if(isUserExist){
@@ -102,13 +92,14 @@ class UserController{
                 if(isUserExist.nMobile === req.body.nMobile){
                     return messaging(res, statuscode.statusSuccess, false, 'Mobile number all ready exist')
                 }
-                // return messaging(res, statuscode.statusSuccess, false, 'Email or Mobile number number all ready exist')
             }
             // TODO: working progress
-            const isUpdate = await User.updateOne(
+            const isUpdate = await User.findOneAndUpdate(
                 {_id: id}, 
-                { sUsername, sPassword, sEmail, nMobile }
-            )
+                { sUsername, sPassword: createHash(sPassword), sEmail, nMobile },
+                { new: true }
+            ).lean()
+            console.log(isUpdate)
             if(!isUpdate){
                 return messaging(res, statuscode.statusSuccess, false, 'Profile not updated', {})
             }
