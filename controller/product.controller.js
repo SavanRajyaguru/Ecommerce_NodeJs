@@ -15,7 +15,7 @@ class ProductController{
                 return messaging(res, statuscode.statusSuccess, false, 'Product not created')
             }
             console.log(result)
-            return messaging(res, statuscode.statusSuccess, true, 'Product uploaded successfully')
+            return messaging(res, statuscode.statusSuccess, true, 'Product uploaded successfully', {})
         } catch (error) {
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
@@ -80,9 +80,9 @@ class ProductController{
             console.log(isInsert)
 
             if(!isInsert){
-                return messaging(res, statuscode.statusSuccess, true, 'Product not add to the cart')
+                return messaging(res, statuscode.statusSuccess, false, 'Product not add to the cart')
             }
-            return messaging(res, statuscode.statusSuccess, true, 'Product add to cart')
+            return messaging(res, statuscode.statusSuccess, true, 'Product add to cart', {})
         } catch (error) {
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
@@ -102,7 +102,7 @@ class ProductController{
                 totalPrice: dTotalPrice,
                 productList: cartData
             }
-            return messaging(res, statuscode.statusSuccess, 'Cart product found', true, productData)
+            return messaging(res, statuscode.statusSuccess, true, 'Cart product found', productData)
         } catch (error) {
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
