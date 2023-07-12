@@ -1,6 +1,5 @@
 const Product = require('../models/product')
 const User = require('../models/user')
-const createHash = require('../utils/createhash.utils')
 const { statuscode, messages } = require('../utils/messages.utils')
 const { messaging } = require('../utils/messaging.utils')
 

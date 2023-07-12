@@ -14,5 +14,7 @@ router
     .post('/add-product', authToken, isAuthorizedSeller, validator.validateProduct, productController.addProduct) 
     .put('/update-user', authToken, validator.validateUpdate, userController.updateUser)
     .get('/seller-product', authToken, isAuthorizedSeller, sellerController.getSellerProduct)
+    .post('/add-cart', authToken, isAuthorizedUser, productController.addToCart)
+    .get('/get-cart', authToken, isAuthorizedUser, productController.getCartData)
 
 module.exports = router
