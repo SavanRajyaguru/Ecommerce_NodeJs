@@ -16,7 +16,6 @@ class UserController{
                     {nMobile: nMobile}
                 ]
             })
-            console.log(isUserExist)
     
             if(isUserExist){
                 return messaging(res, statuscode.statusSuccess, false, messages.alreadyRegisteredUser)
@@ -27,7 +26,6 @@ class UserController{
             //* user create
             req.body.sPassword = createHash(req.body.sPassword)
             const [result] = await User.create([req.body], { session })
-            console.log(result)
             if(!result){
                 return messaging(res, statuscode.statusSuccess, false, messages.catch)
             }
@@ -45,7 +43,6 @@ class UserController{
             return messaging(res, statuscode.statusSuccess, true, messages.registeredSuccess, {id: result._id})
     
         } catch (error) {
-            console.log('>>>>>>>',error)
             await session.abortTransaction()
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         } finally {
@@ -64,7 +61,6 @@ class UserController{
             return messaging(res, statuscode.statusSuccess, true, messages.loginSuccess, isUser)
     
         } catch (error) {
-            console.log(error)
             return messaging(res, statuscode.statusNotFound, messages.catch)
         }
     }
@@ -72,7 +68,6 @@ class UserController{
     async updateUser(req, res){
         try {
             const { id } = req.decoded
-            console.log(req.decoded)
             const { sUsername, sPassword, sEmail, nMobile } = req.body
             
             //* check if the use email and mobile exist or not
@@ -83,7 +78,6 @@ class UserController{
                     {nMobile: req.body.nMobile}
                 ]
             })
-            console.log(isUserExist)
     
             if(isUserExist){
                 if(isUserExist.sEmail === req.body.sEmail){
@@ -99,14 +93,12 @@ class UserController{
                 { sUsername, sPassword: createHash(sPassword), sEmail, nMobile },
                 { new: true }
             ).lean()
-            console.log(isUpdate)
             if(!isUpdate){
                 return messaging(res, statuscode.statusSuccess, false, 'Profile not updated', {})
             }
             // const result = await User.updateOne({iUserId: id}, { })
             return messaging(res, statuscode.statusSuccess, true, 'Profile updated successfully', isUpdate)
         } catch (error) {
-            console.log(error)
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
     }

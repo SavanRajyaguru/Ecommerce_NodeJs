@@ -7,7 +7,6 @@ class SellerController{
     async getSellerProduct(req, res){
         try {
             const { id } = req.decoded
-            console.log(req.decoded)
             const isSellerExist = await User.findOne({_id: id})
             if(!isSellerExist){
                 return messaging(res, statuscode.statusSuccess, false, 'Seller does not exist')
