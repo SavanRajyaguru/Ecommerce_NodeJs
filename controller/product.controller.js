@@ -25,43 +25,63 @@ class ProductController{
         try {
             const { category, limit } = req.query
             if(!category){
-                const allList = await Product.aggregate([
+                // const allList = await Product.aggregate([
+                //     {
+                //         $group: {
+                //             _id: '$sCategory',
+                //             data: {
+                //                 $topN: {
+                //                     output: '$$ROOT',
+                //                     sortBy: { dPrice: -1 },
+                //                     n: 4,
+                //                 },
+                //             },
+                //         }
+                //     },
+                //     {
+                //         $group: {
+                //             _id: null,
+                //             data: {
+                //                 $push: {
+                //                     k: '$_id',
+                //                     v: '$data'
+                //                 }
+                //             }
+                //         }
+                //     },
+                //     {
+                //         $replaceRoot: {
+                //             newRoot: {
+                //                 $arrayToObject: '$data'
+                //             }
+                //         }
+                //     }
+                // ])
+
+                const categoryList = await Product.aggregate([
                     {
                         $group: {
-                            _id: '$sCategory',
-                            data: {
-                                $topN: {
-                                    output: '$$ROOT',
-                                    sortBy: { dPrice: -1 },
-                                    n: 4,
-                                },
-                            },
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: null,
-                            data: {
-                                $push: {
-                                    k: '$_id',
-                                    v: '$data'
-                                }
-                            }
-                        }
-                    },
-                    {
-                        $replaceRoot: {
-                            newRoot: {
-                                $arrayToObject: '$data'
-                            }
+                            _id: '$sCategory'
                         }
                     }
                 ])
-                console.log(allList)
-                return messaging(res, statuscode.statusSuccess, true, 'All Product', allList)
+                const resData = []
+                for (const val of categoryList) {
+                    const obj = {
+                        category_name: val._id
+                    }
+                    const data = await Product.find({ sCategory: val }, { __v: 0 }).limit(4)
+                    obj['category_data'] = data
+                    resData.push(obj)
+                }
+                // const resData = {
+                //     category_name: categoryList
+                // }
+                // console.log(categoryList)
+                return messaging(res, statuscode.statusSuccess, true, 'All Product', resData)
             }
             const result = await Product.find({sCategory: category}, {__v: 0}).limit(limit)
-            console.log(result.length)
+            // console.log(result.length)
             if(!result || result.length <= 0){
                 return messaging(res, statuscode.statusSuccess, false, 'Products does not exists', result)
             }
