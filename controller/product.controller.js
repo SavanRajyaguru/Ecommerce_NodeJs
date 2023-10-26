@@ -125,6 +125,22 @@ class ProductController{
             return messaging(res, statuscode.statusNotFound, false, messages.catch)
         }
     }
+
+    async searchData(req, res) { 
+        try {
+            const { search } = req.query
+            if (!search) {
+                return messaging(res, statuscode.badRequest, false, 'Search parameter is required')
+            }
+            const data = await Product.find(
+                { sName: { $regex: new RegExp(search, 'i') } },
+                { sName: 1, _id: 0 }
+            ).lean()
+            return messaging(res, statuscode.statusSuccess, true, 'Done', data)
+        } catch(error) { 
+            return messaging(res, statuscode.statusNotFound, false, messages.catch)
+        }
+    }
 }
 
 module.exports = new ProductController()

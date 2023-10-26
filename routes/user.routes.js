@@ -16,5 +16,6 @@ router
     .get('/seller-product', authToken, isAuthorizedSeller, sellerController.getSellerProduct)
     .post('/add-cart', authToken, isAuthorizedUser, productController.addToCart)
     .get('/get-cart', authToken, isAuthorizedUser, productController.getCartData)
+    .get('/search-product', productController.searchData)
 
 module.exports = router
